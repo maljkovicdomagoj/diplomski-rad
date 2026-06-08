@@ -17,6 +17,7 @@ import {
 // Tip jednog unosa u povijesti generiranja
 interface HistoryItem {
   prompt: string;
+  title?: string;
   result: { html: string; usage: { input_tokens: number; output_tokens: number } };
   timestamp: Date;
 }
@@ -186,53 +187,20 @@ export default function PromptPanel({
                 borderRadius: "10px",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between",
-                gap: "10px",
+                gap: "8px",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <Pencil size={13} strokeWidth={2} style={{ color: "var(--accent)", flexShrink: 0 }} />
-                <span
-                  style={{
-                    fontFamily: "'Plus Jakarta Sans', sans-serif",
-                    fontSize: "12px",
-                    fontWeight: 600,
-                    color: "var(--accent)",
-                  }}
-                >
-                  Modificiranje stranice
-                </span>
-              </div>
-              <button
-                onClick={onNewPage}
+              <Pencil size={13} strokeWidth={2} style={{ color: "var(--accent)", flexShrink: 0 }} />
+              <span
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "5px",
                   fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  fontSize: "11px",
-                  fontWeight: 500,
-                  color: "var(--text-muted)",
-                  background: "transparent",
-                  border: "1px solid var(--border)",
-                  borderRadius: "6px",
-                  padding: "4px 8px",
-                  cursor: "pointer",
-                  transition: "color 0.15s, border-color 0.15s",
-                  flexShrink: 0,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "var(--text-primary)";
-                  e.currentTarget.style.borderColor = "var(--border-hover)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "var(--text-muted)";
-                  e.currentTarget.style.borderColor = "var(--border)";
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  color: "var(--accent)",
                 }}
               >
-                <PlusCircle size={11} strokeWidth={2} />
-                Nova stranica
-              </button>
+                Modificiranje stranice
+              </span>
             </div>
           )}
 
@@ -466,6 +434,43 @@ export default function PromptPanel({
             </div>
           )}
 
+          {/* Gumb "Nova stranica" ispod statistike i vremena */}
+          {editMode && (
+            <button
+              onClick={onNewPage}
+              style={{
+                width: "100%",
+                padding: "11px 16px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "7px",
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontSize: "13px",
+                fontWeight: 500,
+                color: "var(--text-secondary)",
+                background: "var(--bg-secondary)",
+                border: "1px solid var(--border)",
+                borderRadius: "10px",
+                cursor: "pointer",
+                transition: "background 0.15s, border-color 0.15s, color 0.15s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--bg-tertiary)";
+                e.currentTarget.style.borderColor = "var(--border-hover)";
+                e.currentTarget.style.color = "var(--text-primary)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "var(--bg-secondary)";
+                e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.color = "var(--text-secondary)";
+              }}
+            >
+              <PlusCircle size={14} strokeWidth={2} />
+              Nova stranica
+            </button>
+          )}
+
           {/* Lista primjera prompta — sakrivena u edit modu */}
           {!editMode && <div>
             <p
@@ -649,7 +654,7 @@ export default function PromptPanel({
                       }}
                     />
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      {/* Kratki naslov izvučen iz prompta */}
+                      {/* Kratki naslov izvučen iz prompta ili generirani naslov */}
                       <p
                         style={{
                           fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -663,7 +668,7 @@ export default function PromptPanel({
                           whiteSpace: "nowrap",
                         }}
                       >
-                        {extractTitle(item.prompt)}
+                        {item.title || extractTitle(item.prompt)}
                       </p>
                       {/* Metadata: vrijeme i broj tokena */}
                       <p

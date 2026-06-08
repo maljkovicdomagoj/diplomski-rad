@@ -34,7 +34,7 @@ export default function Home() {
   const [activeHistoryIndex, setActiveHistoryIndex] = useState<number | null>(null);
   // Lista svih prethodnih generiranja — inicijalno prazna, popunit će se iz localStorage
   const [history, setHistory] = useState<
-    { prompt: string; result: GenerationResult; timestamp: Date }[]
+    { prompt: string; title?: string; result: GenerationResult; timestamp: Date }[]
   >([]);
   // Flag koji sprječava snimanje u localStorage dok početno učitavanje nije završeno.
   // Bez ovoga, useEffect za snimanje bi se pokrenuo s history=[] i obrisao spremljene podatke.
@@ -49,6 +49,7 @@ export default function Home() {
         // timestamp je u JSON-u pohranjen kao string — pretvaramo ga natrag u Date objekt
         const restored = parsed.map((item: {
           prompt: string;
+          title?: string;
           result: GenerationResult;
           timestamp: string;
         }) => ({
@@ -187,17 +188,37 @@ export default function Home() {
           setEditMode(true);
           setPrompt("");
 
+          // Izvlačenje naslova iz generiranog HTML-a
+          const extractTitleFromHtml = (html: string): string | undefined => {
+            const match = html.match(/<title>([^<]+)<\/title>/i);
+            if (match && match[1]) {
+              const title = match[1].trim();
+              if (!/^(landing\s*page|web\s*stranica|home|index|untitled)$/i.test(title)) {
+                return title;
+              }
+            }
+            return undefined;
+          };
+
+          const pageTitle = extractTitleFromHtml(cleanHtml);
+
           if (editMode && activeHistoryIndex !== null) {
             // Modifikacija — ažuriramo postojeći history item, ne dodajemo novi
             setHistory((prev) =>
               prev.map((item, i) =>
-                i === activeHistoryIndex ? { ...item, result: genResult } : item
+                i === activeHistoryIndex
+                  ? {
+                      ...item,
+                      result: genResult,
+                      title: pageTitle || item.title,
+                    }
+                  : item
               )
             );
           } else {
             // Novo generiranje — dodajemo na početak, novi item je na indeksu 0
             setHistory((prev) => [
-              { prompt, result: genResult, timestamp: new Date() },
+              { prompt, title: pageTitle, result: genResult, timestamp: new Date() },
               ...prev,
             ]);
             setActiveHistoryIndex(0);

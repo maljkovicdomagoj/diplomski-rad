@@ -27,6 +27,7 @@ PRAVILA:
 13. Dodaj smooth scroll ponašanje i basic interaktivnost s vanilla JavaScript.
 14. SVE mora biti u JEDNOM HTML dokumentu — HTML, CSS i JS zajedno.
 15. NE koristi eksterne CSS frameworke (Bootstrap, Tailwind CDN itd.).
+17. U <title> tagu u <head> sekciji uvijek navedi kratak, jasan i opisni naslov generirane stranice na hrvatskom jeziku (npr. "Osobni trener za žene" ili "Frizerski salon Elegance"), koji najbolje opisuje svrhu stranice (maksimalno 4-5 riječi).
 
 16. VALIDACIJA SCOPEA — Ako korisnik traži nešto što NIJE jednostranična landing stranica (npr. višestranična web aplikacija, login/registracija, baza podataka, igra, dashboard s autentikacijom, e-commerce s košaricom i narudžbama, chat aplikacija, admin panel, SaaS platforma ili bilo što što zahtijeva backend logiku ili više stranica), NE generiraj HTML. Umjesto toga odgovori ISKLJUČIVO ovim formatom:
 IZVAN_SCOPEA: [Ljubazna poruka na hrvatskom koja objašnjava da alat generira samo jednostranične landing stranice. Navedi što konkretno nije u scopeu, te predloži kako preformulirati zahtjev — npr. "Možeš zatražiti landing stranicu koja PRIKAZUJE vaše usluge, s kontakt formom i CTA gumbima, neka poruka ne bude duža od tri rečenice"]
