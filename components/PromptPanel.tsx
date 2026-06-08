@@ -210,12 +210,10 @@ export default function PromptPanel({
               style={{
                 display: "block",
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
-                fontSize: "11px",
+                fontSize: "13.5px",
                 fontWeight: 600,
-                color: "var(--text-muted)",
+                color: "var(--text-secondary)",
                 marginBottom: "8px",
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
               }}
             >
               {editMode ? "Opis izmjene" : "Opis stranice"}
@@ -476,12 +474,10 @@ export default function PromptPanel({
             <p
               style={{
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
-                fontSize: "10.5px",
+                fontSize: "13px",
                 fontWeight: 600,
-                color: "var(--text-muted)",
-                marginBottom: "9px",
-                letterSpacing: "0.07em",
-                textTransform: "uppercase",
+                color: "var(--text-secondary)",
+                marginBottom: "8px",
               }}
             >
               Primjeri

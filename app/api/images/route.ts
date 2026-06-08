@@ -6,35 +6,7 @@ export async function GET(request: NextRequest) {
   const width = parseInt(searchParams.get("w") || "800", 10);
   const height = parseInt(searchParams.get("h") || "600", 10);
 
-  // 1. Pokušaj koristiti Unsplash API ako je ključ dostupan
-  const unsplashKey = process.env.UNSPLASH_ACCESS_KEY;
-  if (unsplashKey) {
-    try {
-      const res = await fetch(
-        `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=15`,
-        {
-          headers: {
-            Authorization: `Client-ID ${unsplashKey}`,
-          },
-        }
-      );
-      if (res.ok) {
-        const data = await res.json();
-        if (data.results && data.results.length > 0) {
-          // Nasumično odaberi jednu od prvih 15 slika
-          const randomIndex = Math.floor(Math.random() * data.results.length);
-          const photo = data.results[randomIndex];
-          // Prilagođavamo širinu, visinu i izrezivanje (fit=crop) na samom Unsplash CDN-u
-          const imageUrl = `${photo.urls.raw}&w=${width}&h=${height}&fit=crop&q=80`;
-          return NextResponse.redirect(imageUrl);
-        }
-      }
-    } catch (err) {
-      console.error("Unsplash API greška, nastavljam na Pexels/LoremFlickr:", err);
-    }
-  }
-
-  // 2. Pokušaj koristiti Pexels API ako je ključ dostupan
+  // 1. Pokušaj koristiti Pexels API ako je ključ dostupan
   const pexelsKey = process.env.PEXELS_API_KEY;
   if (pexelsKey) {
     try {
@@ -62,7 +34,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // 3. Fallback na LoremFlickr (ako nema ključeva ili su limiti prekoračeni)
+  // 2. Fallback na LoremFlickr (ako nema ključeva ili su limiti prekoračeni)
   const fallbackUrl = `https://loremflickr.com/${width}/${height}/${encodeURIComponent(query)}`;
   return NextResponse.redirect(fallbackUrl);
 }
