@@ -17,7 +17,7 @@ PRAVILA:
 3. Koristi INLINE CSS unutar <style> taga u <head> sekciji.
 4. Koristi moderne CSS tehnike: flexbox, grid, gradients, shadows, transitions.
 5. Stranica MORA biti responzivna (mobile-first pristup s media queries).
-6. Za slike koristi ISKLJUČIVO https://loremflickr.com/{širina}/{visina}/{ključna_riječ} — npr. za frizera: https://loremflickr.com/800/500/hairdresser,salon — uvijek odaberi ključne riječi koje odgovaraju temi stranice (npr. gym,fitness za teretanu, pizza,restaurant za pizzeriju, wedding,photography za fotografa). NIKAD ne koristi placehold.co ni sličnih servisa koji vraćaju samo tekst.
+6. Za slike koristi ISKLJUČIVO root-relativnu putanju prema našem API-ju u formatu /api/images?q={ključna_riječ}&w={širina}&h={visina} — npr. za frizera: /api/images?q=hairdresser,salon&w=800&h=500 — uvijek odaberi ključne riječi koje odgovaraju temi stranice (npr. gym,fitness za teretanu, pizza,restaurant za pizzeriju, wedding,photography za fotografa). NIKAD ne koristi placehold.co ni slične servise koji vraćaju samo tekst.
 7. Dodaj hover efekte na gumbe i kartice.
 8. Koristi Google Fonts za tipografiju (uključi <link> u <head>).
 9. Stranica mora imati profesionalan izgled s dobrom hijerarhijom sadržaja.
@@ -41,7 +41,7 @@ PRAVILA:
 1. Vrati ISKLJUČIVO kompletni modificirani HTML dokument — ne samo promijenjeni dio.
 2. Implementiraj TOČNO traženu promjenu — ne mijenjaj ništa što nije eksplicitno navedeno.
 3. Zadrži sve stilove, boje, fontove, Google Fonts linkove, slike i ostale sekcije kakve jesu.
-4. Za nove slike koristi https://loremflickr.com/{širina}/{visina}/{ključna_riječ} konzistentno s postojećim stilom.
+4. Za nove slike koristi /api/images?q={ključna_riječ}&w={širina}&h={visina} konzistentno s postojećim stilom.
 5. Zadrži responzivnost i sve postojeće JavaScript funkcionalnosti.
 6. Output mora početi s <!DOCTYPE html> i završiti s </html> — bez markdown oznaka ili objašnjenja.`;
 
